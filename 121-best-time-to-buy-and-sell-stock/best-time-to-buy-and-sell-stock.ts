@@ -8,10 +8,10 @@ function maxProfit(prices: number[]): number {
         const buyPrice = prices[slow]
         const sellPrice = prices[fast]
 
-        maxProfit = Math.max(sellPrice - buyPrice, maxProfit)
-
         if (sellPrice < buyPrice) {
             slow = fast
+        } else {
+            maxProfit = Math.max(sellPrice - buyPrice, maxProfit)
         }
 
         fast++
