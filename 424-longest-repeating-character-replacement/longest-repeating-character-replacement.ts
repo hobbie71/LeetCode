@@ -8,9 +8,7 @@ function characterReplacement(s: string, k: number): number {
 
     while (fast <= s.length) {
         const windowLength = fast - slow
-        let replacementsUsed = windowLength - Math.max(...map.values())
-
-        if (Math.abs(replacementsUsed) === Infinity) replacementsUsed = 0
+        let replacementsUsed = windowLength - Math.max(0, ...map.values())
         
         if (replacementsUsed > k) {
             map.set(s[slow], (map.get(s[slow]) || 0) - 1)
