@@ -12,51 +12,30 @@
 
 function removeNthFromEnd(head: ListNode | null, n: number): ListNode | null {
     if (!head) return null
-    
-    // Reverse LinkedList
-    let reversedHead = reverseList(head)
 
-    // Get n^th node & previous node
-    let node: ListNode = reversedHead
-    let prevNode: ListNode | null = null
+    // Get n^th node & prevNode
+    let fast: ListNode = head
+    let slow: ListNode = head
 
     for (let i = 1; i < n; i++) {
-        prevNode = node
-        node = node.next
+        fast = fast.next
     }
 
-    // Remove node from LinkedList
-    if (!node.next && !prevNode) {
-        return null
-    } else if (prevNode) {
-        prevNode.next = node.next
-    } else {
-        reversedHead = reversedHead.next
-    }
-    
-    node.next = null
-
-    return reverseList(reversedHead)
-};
-
-/**
- * Takes head of singly LinkedList and returns head of the LinkedList reversed
- * @param head head of LinkedList
- * @return head of reversed LinkedList
- */
-function reverseList(head: ListNode): ListNode {
-    let node = head
     let prevNode: ListNode | null = null
 
-
-    while (node) {
-        const nextNode: ListNode | null = node.next
-
-        node.next = prevNode
-
-        prevNode = node
-        node = nextNode
+    while (fast && fast.next) {
+        prevNode = slow
+        slow = slow.next
+        fast = fast.next
     }
 
-    return prevNode
-}
+    // Remove Node
+    if (prevNode) {
+        prevNode.next = slow.next
+    } else {
+        head = slow.next
+        slow.next = null
+    }
+    
+    return head
+};
