@@ -1,50 +1,47 @@
 function isValidSudoku(board: string[][]): boolean {
-    const colMap = new Map<number, string>()
-    const squareMap = new Map<string, string>()
+    const colMap: Map<number, string> = new Map()
+    const rowMap: Map<number, string> = new Map()
+    const gridMap: Map<string, string> = new Map()
 
     for (let row = 0; row < board.length; row++) {
-        const rowArray = board[row]
-        const rowMap = new Map<number, number>()
+        for (let col = 0; col < board.length; col++) {
+            const value: string = board[row][col]
 
-        for (let col = 0; col < rowArray.length; col++) {
-            if (rowArray[col] === ".") continue
+            if (value === ".") continue
 
-            const value = +rowArray[col]
-
-            // Check duplicates in rows
-            if (rowMap.has(value)) {
-                return false 
+            // Check & Store col
+            const currentCol: string = colMap.get(col)
+            if (!currentCol) {
+                colMap.set(col, value)
             } else {
-                rowMap.set(value, 1);
+                if (currentCol.includes(value)) return false
+                colMap.set(col, currentCol + value)
+            }
+            
+            // Check & Store row
+            const currentRow: string = rowMap.get(row)
+            if (!currentRow) {
+                rowMap.set(row, value)
+            } else {
+                if (currentRow.includes(value)) return false
+                rowMap.set(row, currentRow + value)
             }
 
-            // Check duplicates in col
-            const colValue: string = colMap.get(col)
-            if (colValue) {
-                if (colValue.includes(value.toString())) {
-                    return false
-                } else {
-                    colMap.set(col, colValue + value)
-                }
+            // Check & Store 3x3
+            const key = createGridKey(col, row)
+            const currentGrid: string = gridMap.get(key)
+            if (!currentGrid) {
+                gridMap.set(key, value)
             } else {
-                colMap.set(col, value.toString())
+                if (currentGrid.includes(value)) return false
+                gridMap.set(key, currentGrid + value)
             }
-
-            // Check duplicates in square
-            const squareKey: string = `${Math.floor(col / 3)}-${Math.floor(row / 3)}`
-            const squareValue: string = squareMap.get(squareKey)
-
-            if (squareValue) {
-                if (squareValue.includes(value.toString())) {
-                    return false
-                } else {
-                    squareMap.set(squareKey, squareValue + value)
-                }
-            } else {
-                squareMap.set(squareKey, value.toString())
-            }
-        }
+        }   
     }
 
     return true
 };
+
+const createGridKey = (col: number, row: number): string => {
+    return `${Math.floor(col / 3)}-${Math.floor(row / 3)}`
+}
