@@ -4,9 +4,6 @@ function search(nums: number[], target: number): number {
 
     while (left <= right) {
         const middle = Math.floor((right + left) / 2)
-        console.log("left: " + left)
-        console.log("right: " + right)
-        console.log("middle: " + middle)
 
         if (nums[middle] === target) return middle
 
