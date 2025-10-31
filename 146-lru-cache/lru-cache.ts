@@ -14,7 +14,7 @@ class LRUCache {
             const index = this.cache.indexOf(key)
 
             this.cache.splice(index, 1)
-            this.cache.unshift(key)
+            this.cache.push(key)
             return this.cacheMap.get(key)
         }
 
@@ -27,14 +27,14 @@ class LRUCache {
 
             const index = this.cache.indexOf(key)
             this.cache.splice(index, 1)
-            this.cache.unshift(key)
+            this.cache.push(key)
         } else {
             if (this.cache.length === this.capacity) {
-                const deleteKey = this.cache.pop()
+                const deleteKey = this.cache.shift()
                 this.cacheMap.delete(deleteKey)
             }
 
-            this.cache.unshift(key)
+            this.cache.push(key)
             this.cacheMap.set(key, value)
         }
     }
