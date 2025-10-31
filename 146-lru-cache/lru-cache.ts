@@ -1,42 +1,29 @@
 class LRUCache {
-    cache: number[]
-    cacheMap: Map<number, number>
+    cache: Map<number, number>
     capacity: number
 
     constructor(capacity: number) {
-        this.cache = []
-        this.cacheMap = new Map()
+        this.cache = new Map()
         this.capacity = capacity
     }
 
     get(key: number): number {
-        if (this.cacheMap.has(key)) {
-            const index = this.cache.indexOf(key)
-
-            this.cache.splice(index, 1)
-            this.cache.push(key)
-            return this.cacheMap.get(key)
-        }
-
-        return -1
+        if (!this.cache.has(key)) return -1
+        const value = this.cache.get(key)
+        this.cache.delete(key)
+        this.cache.set(key, value)
+        return value
     }
 
     put(key: number, value: number): void {
-        if (this.cacheMap.has(key)) {
-            this.cacheMap.set(key, value)
-
-            const index = this.cache.indexOf(key)
-            this.cache.splice(index, 1)
-            this.cache.push(key)
-        } else {
-            if (this.cache.length === this.capacity) {
-                const deleteKey = this.cache.shift()
-                this.cacheMap.delete(deleteKey)
-            }
-
-            this.cache.push(key)
-            this.cacheMap.set(key, value)
-        }
+        if (this.cache.has(key)) {
+            this.cache.delete(key)
+        } else if (this.cache.size === this.capacity) {
+            const deleteKey = this.cache.keys().next().value
+            this.cache.delete(deleteKey)
+        } 
+        
+        this.cache.set(key, value)
     }
 }
 
