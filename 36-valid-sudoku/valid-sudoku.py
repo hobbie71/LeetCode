@@ -4,8 +4,9 @@ class Solution:
         colMap: Dict[int, str] = defaultdict(str)
         squareMap: Dict[str, str] = defaultdict(str)
 
-        for row, rowArray in enumerate(board):
-            for col, value in enumerate(rowArray):
+        for row in range(len(board)):
+            for col in range(len(board)):
+                value = board[col][row]
                 if value == ".":
                     continue
                 
