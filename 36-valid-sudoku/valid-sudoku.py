@@ -17,12 +17,9 @@ class Solution:
                     return False
                 colMap[col] = colMap.get(col) + value
 
-                key = getSquareKey(col, row)
+                key = f"{col // 3}-{row // 3}"
                 if value in squareMap[key]:
                     return False
                 squareMap[key] = squareMap.get(key) + value
 
         return True
-
-def getSquareKey(col: int, row: int) -> str:
-    return f"{math.floor(col / 3)}-{math.floor(row / 3)}"
