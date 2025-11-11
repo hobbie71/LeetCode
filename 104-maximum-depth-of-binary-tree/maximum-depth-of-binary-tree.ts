@@ -13,25 +13,6 @@
  */
 
 function maxDepth(root: TreeNode | null): number {
-    if (!root) return 0;
-
-    let maxDepth = 0;
-    const queue: TreeNode[] = [root];
-
-    while (queue.length) {
-        let count = queue.length;
-
-        maxDepth++;
-
-        while (count > 0) {
-            const node = queue.shift();
-
-            if (node.left) queue.push(node.left);
-            if (node.right) queue.push(node.right);
-
-            count--;
-        }
-    }
-
-    return maxDepth
+    if (!root) return 0
+    return 1 + Math.max(maxDepth(root.left), maxDepth(root.right))
 };
