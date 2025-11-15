@@ -20,9 +20,7 @@ function isSubtree(root: TreeNode | null, subRoot: TreeNode | null): boolean {
     while (queue.length) {
         const node = queue.shift()
 
-        if (node.val === subRoot.val) {
-            if (isSameTree(node, subRoot)) return true
-        }
+        if (isSameTree(node, subRoot)) return true
 
         if (node.left) queue.push(node.left)
         if (node.right) queue.push(node.right)
