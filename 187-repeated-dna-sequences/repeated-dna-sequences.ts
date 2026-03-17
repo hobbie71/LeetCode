@@ -15,5 +15,5 @@ function findRepeatedDnaSequences(s: string): string[] {
         point++
     }
 
-    return Array.from(outputSet.values())
+    return [...outputSet]
 };
