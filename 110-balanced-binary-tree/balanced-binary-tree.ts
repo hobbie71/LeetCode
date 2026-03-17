@@ -13,19 +13,21 @@
  */
 
 function isBalanced(root: TreeNode | null): boolean {
-    if (!root) return true
-    
-    function dfs(node: TreeNode | null): number {
-        if (!node) return 0
+    let output = true
 
-        const leftLength: number = dfs(node.left)
-        const rightLength: number = dfs(node.right)
+    const dfs = (node: TreeNode | null): number => {
+        if (!node || !output) return 0
 
-        if (leftLength === -1 || rightLength === -1) return -1
-        if (Math.abs(leftLength - rightLength) > 1) return -1
+        const left = dfs(node.left)
+        const right = dfs(node.right)
 
-        return Math.max(leftLength, rightLength) + 1
+        if (Math.abs(left - right) > 1) {
+            output = false
+        }
+
+        return Math.max(left, right) + 1
     }
 
-    return dfs(root) !== -1
+    dfs(root)
+    return output
 };
