@@ -13,29 +13,11 @@
  */
 
 function invertTree(root: TreeNode | null): TreeNode | null {
-    if (root === null) return null
+    if (root === null) return null;
 
-    const queue: TreeNode[] = [root]
+    [root.left, root.right] = [root.right, root.left];
+    invertTree(root.left);
+    invertTree(root.right);
 
-    // BFS
-    while (queue.length) {
-        const node = queue.shift()
-
-        // Swap nodes left and right
-        if (node.left || node.right) {
-            const temp = node.left
-            node.left = node.right
-            node.right = temp
-        }
-
-        if (node.left) {
-            queue.push(node.left)
-        }
-
-        if (node.right) {
-            queue.push(node.right)
-        }
-    }
-
-    return root
+    return root;
 };
