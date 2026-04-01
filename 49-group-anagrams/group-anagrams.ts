@@ -1,10 +1,15 @@
 function groupAnagrams(strs: string[]): string[][] {
-    const count: Record<string, string[]> = {}
+    const hash: Map<string, string[]> = new Map();
 
-    for (let str of strs) {
-        const key = str.split("").sort().join("")
-        count[key] ? count[key].push(str) : count[key] = [str]
-    }    
+    for (const str of strs) {
+        const sorted: string = str.split("").sort().join();
 
-    return Object.values(count)
+        if (!hash.has(sorted)) {
+            hash.set(sorted, []);
+        }
+
+        hash.get(sorted)!.push(str);
+    }
+
+    return [...hash.values()];
 };
